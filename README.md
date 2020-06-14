@@ -14,6 +14,7 @@ GTA 5 Mod that lets you control your engine, lights, windows and doors.
 
 <b>Notes</b>
 - This menu is based on DOJRP menu.
+- Thanks to [jtilly](https://github.com/jtilly) for the [INI Parser](https://github.com/jtilly/inih)
 
 <b>Screenshots</b>
 https://imgur.com/a/xBigPwC
