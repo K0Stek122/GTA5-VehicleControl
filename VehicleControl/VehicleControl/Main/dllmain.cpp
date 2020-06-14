@@ -32,7 +32,10 @@ void ScriptMain()
 		if (PED::IS_PED_IN_ANY_VEHICLE(lPlayerPed, FALSE))
 		{
 			if (IsKeyJustUp(OpenMenu) && !doorsSubMenu->isVisible && !windowsSubMenu->isVisible)
+			{
+				vehicleMenu->index = 0;
 				vehicleMenu->isVisible = !vehicleMenu->isVisible;
+			}
 
 			if (IsKeyJustUp(VK_RETURN))
 			{
@@ -62,9 +65,13 @@ void ScriptMain()
 						}
 						break;
 					case 3: //Engine
-						isEngineOn = !isEngineOn;
+						if (VEHICLE::_IS_VEHICLE_ENGINE_ON(playerVehicle))
+							VEHICLE::SET_VEHICLE_ENGINE_ON(playerVehicle, FALSE, FALSE, TRUE);
+						else
+							VEHICLE::SET_VEHICLE_ENGINE_ON(playerVehicle, TRUE, FALSE, TRUE);
 						break;
 					}
+
 				else if (doorsSubMenu->isVisible)
 				{
 					if (doorsSubMenu->index > 0 && doorsSubMenu->index < doorsSubMenu->GetMenuElementCount() - 1)
@@ -79,6 +86,7 @@ void ScriptMain()
 					else
 						VEHICLE::SET_VEHICLE_DOORS_SHUT(playerVehicle, FALSE);
 				}
+
 				else if (windowsSubMenu->isVisible)
 				{
 					if (windowsSubMenu->index > 0 && windowsSubMenu->index < windowsSubMenu->GetMenuElementCount() - 1)
@@ -92,18 +100,12 @@ void ScriptMain()
 					}
 					else
 					{
-						for (int i = 0; i < 3; i++)
+						for (int i = 0; i < 4; i++)
 						{ 
 							VEHICLE::ROLL_UP_WINDOW(playerVehicle, i);
 						}
 					}
 				}
-			}
-
-			if (isEngineOn == false)
-			{
-				Vehicle playerVehicle = PED::GET_VEHICLE_PED_IS_IN(lPlayerPed, FALSE);
-				VEHICLE::SET_VEHICLE_ENGINE_ON(playerVehicle, FALSE, FALSE, FALSE);
 			}
 		}
 		else
